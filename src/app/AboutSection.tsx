@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState} from'react';
-// Note: Since 'Image' and 'RatingBar' are used, assume they are correctly imported or mocked if this were a single file.
-// For this environment, we'll keep the Next.js component imports assuming they are available in the project structure.
+import RatingBar from '@/components/ui/RatingBar';
 
 const AboutSection = () => {
     const [isFixed, setIsFixed] = useState(false);
@@ -77,21 +76,14 @@ const AboutSection = () => {
                 </h3>
                 
                 <div className="flex flex-col gap-[2px] sm:gap-[3px] lg:gap-[4px]">
-                  {/* RatingBar Component usage remains the same, assuming import works */}
-                  {/* <RatingBar 
+                  <RatingBar 
                     rating={5}
                     maxRating={5}
                     readonly={true}
                     size="medium"
                     color="#f3e16c"
                     emptyColor="#d9d9d9"
-                  /> */}
-                  <div className="flex gap-1">
-                      {/* Simple star mock for RatingBar to prevent errors if component is missing */}
-                      {[...Array(5)].map((_, i) => (
-                        <span key={i} className={`text-4xl ${i < 5 ? 'text-[#f3e16c]' : 'text-[#d9d9d9]'}`}>★</span>
-                      ))}
-                  </div>
+                  />
                   <p className="text-[#ffffff] text-[16px] sm:text-[24px] lg:text-[32px] font-normal leading-[23px] sm:leading-[35px] lg:leading-[47px] text-left">
                     "Making moments delightful"
                   </p>
