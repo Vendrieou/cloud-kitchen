@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from 'react';
+import Button from '@/components/ui/Button';
+import EditText from '@/components/ui/EditText';
+import HeaderMenuItem from '@/components/common/HeaderMenuItem';
 
 const WHATSAPP_NUMBER = '+6281377356803';
 // Define the TypeScript interface for the form data structure
@@ -9,62 +12,6 @@ interface ContactForm {
   phone: string;
   message: string;
 }
-
-// --- MOCK COMPONENTS FOR STANDALONE FILE ---
-// These mocks replace external components like '@/components/ui/Button' and '@/components/ui/EditText'
-// to make the single file runnable.
-
-type ButtonProps = {
-  text: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
-  className?: string;
-};
-
-const Button = ({ text, onClick, className = '' }: ButtonProps) => (
-  <button
-    onClick={onClick}
-    className={`bg-[#f3e16c] text-[#151538] text-xl sm:text-2xl lg:text-3xl font-normal font-indie rounded-[56px] px-8 sm:px-10 py-4 w-full transition-colors hover:bg-yellow-400 active:scale-[0.98] shadow-lg ${className}`}
-  >
-    {text}
-  </button>
-);
-
-type EditTextProps = {
-  id: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  className?: string;
-  placeholder?: string;
-  isTextArea?: boolean;
-};
-
-const EditText = ({ id, value, onChange, className = '', placeholder = '', isTextArea = false }: EditTextProps) => {
-  const inputClasses = `w-full bg-[#f7f7f7] text-[#151538] text-lg sm:text-xl lg:text-2xl font-normal font-indie rounded-[30px] p-4 border border-gray-300 focus:ring-2 focus:ring-[#43b6b2] focus:border-transparent transition-all shadow-inner ${className}`;
-
-  if (isTextArea) {
-    return (
-      <textarea
-        id={id}
-        value={value}
-        onChange={onChange as (e: React.ChangeEvent<HTMLTextAreaElement>) => void}
-        placeholder={placeholder}
-        className={`${inputClasses} h-32 resize-none`}
-      />
-    );
-  }
-
-  return (
-    <input
-      id={id}
-      type="text"
-      value={value}
-      onChange={onChange as (e: React.ChangeEvent<HTMLInputElement>) => void}
-      placeholder={placeholder}
-      className={inputClasses}
-    />
-  );
-};
-// --- END MOCK COMPONENTS ---
 
 const ContactSection = () => {
   // Initialize state with the ContactForm interface
@@ -132,38 +79,6 @@ const ContactSection = () => {
   const messageClasses = submitMessage?.type === 'success'
     ? 'bg-green-100 border-green-400 text-green-700'
     : 'bg-red-100 border-red-400 text-red-700';
-
-
-  const HeaderMenuItem = ({ text, href }: { text: string, href: string }) => {
-
-    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-      // Prevent default anchor behavior (instant jump)
-      e.preventDefault();
-
-      // Extract the target ID (e.g., "#home")
-      const targetId = href.startsWith('#') ? href.substring(1) : href;
-      const targetElement = document.getElementById(targetId);
-
-      if (targetElement) {
-        // Use the element's scrollIntoView method for native smooth scrolling
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        // Fallback: Use the default anchor behavior if element not found
-        window.location.href = href;
-      }
-    };
-
-    return (
-      <a
-        href={href}
-        onClick={handleClick} // Added custom click handler for smooth scroll
-        // UPDATED: Changed hover color to yellow (#f3e16c)
-        className="text-[#f7f7f7] text-[18px] sm:text-[27px] lg:text-[36px] font-normal leading-[26px] sm:leading-[40px] lg:leading-[53px] text-center transition-colors hover:text-[#f3e16c] block w-full lg:w-auto p-2 lg:p-0"
-      >
-        {text}
-      </a>
-    );
-  };
 
   const menuItems = [
     { text: "Home", href: "#hero" },

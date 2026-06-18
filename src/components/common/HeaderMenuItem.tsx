@@ -1,40 +1,45 @@
-import Link from'next/link';
+'use client';
+
 import { twMerge } from 'tailwind-merge';
 
 interface HeaderMenuItemProps {
   text: string;
   href?: string;
   className?: string;
-  onClick?: () => void;
 }
 
 const HeaderMenuItem = ({ 
   text, 
   href = "#", 
-  className,
-  onClick 
+  className
 }: HeaderMenuItemProps) => {
-  const baseClasses = "text-[18px] sm:text-[24px] md:text-[30px] lg:text-[36px] font-normal leading-[26px] sm:leading-[35px] md:leading-[44px] lg:leading-[53px] text-header-text hover:text-primary-background transition-colors duration-200"
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Prevent default anchor behavior (instant jump)
+    e.preventDefault();
+    
+    // Extract the target ID (e.g., "#home")
+    const targetId = href.startsWith('#') ? href.substring(1) : href;
+    const targetElement = document.getElementById(targetId);
 
-  if (href && href !== "#") {
-    return (
-      <Link 
-        href={href}
-        className={twMerge(baseClasses, className)}
-        onClick={onClick}
-      >
-        {text}
-      </Link>
-    )
-  }
+    if (targetElement) {
+      // Use the element's scrollIntoView method for native smooth scrolling
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Fallback: Use the default anchor behavior if element not found
+      window.location.href = href;
+    }
+  };
+
+  const baseClasses = "text-[#151538] text-[18px] sm:text-[27px] lg:text-[36px] font-normal leading-[26px] sm:leading-[40px] lg:leading-[53px] text-center transition-colors hover:text-[#f3e16c] block w-full lg:w-auto p-2 lg:p-0"
 
   return (
-    <button
-      className={twMerge(baseClasses, "cursor-pointer", className)}
-      onClick={onClick}
+    <a 
+      href={href}
+      onClick={handleClick}
+      className={twMerge(baseClasses, className)}
     >
       {text}
-    </button>
+    </a>
   )
 }
 
